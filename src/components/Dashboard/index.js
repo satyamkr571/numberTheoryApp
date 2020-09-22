@@ -3,6 +3,14 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import "./styles.scss";
 import Card from "../Cards";
+import Charts from "../Highcharts";
+import {
+  costPerCustomerChartData,
+  costPerLeadChartData,
+  costPerMQLChartData,
+  costPerSQLChartData,
+  mockData,
+} from "./mockData";
 const Dashboard = (props) => {
   const moneyDetails = [
     { title: "Revenue", value: "590333" },
@@ -11,10 +19,50 @@ const Dashboard = (props) => {
     { title: "Net Income Customer", value: "432" },
   ];
   const chartData = [
-    { title: "Chart 1" },
-    { title: "Chart 2" },
-    { title: "Chart 3" },
-    { title: "Chart 4" },
+    {
+      title: "Cost Per Lead",
+      chart: costPerLeadChartData.data,
+      chartDetails: [
+        {
+          id: "1",
+          type: "area",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "Cost Per MQL",
+      chart: costPerMQLChartData.data,
+      chartDetails: [
+        {
+          id: "1",
+          type: "area",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "Cost Per SQL",
+      chart: costPerSQLChartData.data,
+      chartDetails: [
+        {
+          id: "1",
+          type: "area",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "Cost Per Customer",
+      chart: costPerCustomerChartData.data,
+      chartDetails: [
+        {
+          id: "1",
+          type: "area",
+          seriesData: mockData,
+        },
+      ],
+    },
   ];
   const periodData = [
     { title: "Users" },
@@ -23,10 +71,23 @@ const Dashboard = (props) => {
     { title: "SQL" },
     { title: "Customer" },
   ];
-  const dispatch = useDispatch();
-  const renderChart = (chartDetails) => {
+
+  // const dispatch = useDispatch();
+
+  const getxAxisData = (chartData) => {
+    return (chartData && chartData.xAxis) || {};
+  };
+  const renderChart = (data, chartHeight = "300px") => {
+    const { chartDetails, chart } = data;
+    const xAxisData = getxAxisData(chart);
     return (
-      <div className="chart-container">Hi Chart Will be rendered here...</div>
+      <div className="chart-container">
+        <Charts
+          height={chartHeight}
+          chartsData={chartDetails}
+          xAxisData={xAxisData}
+        />
+      </div>
     );
   };
   return (
@@ -35,8 +96,9 @@ const Dashboard = (props) => {
         <div className="dashboard-header">CMO Dashboard</div>
         <div className="dashboard-body">
           <div className="card-row">
-            {moneyDetails.map((money) => (
+            {moneyDetails.map((money, index) => (
               <Card
+                key={index}
                 classNames=" money-cards"
                 header={money.title}
                 body={`$${money.value}`}
@@ -45,7 +107,10 @@ const Dashboard = (props) => {
           </div>
           <div className="card-row">
             {chartData.map((data) => (
-              <Card classNames=" chart-cards" body={renderChart(data)} />
+              <Card
+                classNames=" chart-cards"
+                body={renderChart(data, "200px")}
+              />
             ))}
           </div>
         </div>
@@ -57,7 +122,7 @@ const Dashboard = (props) => {
             <Card
               classNames=" chart-cards"
               header={period.title}
-              body={renderChart(period.data)}
+              body={renderChart(period, "100px")}
             />
           ))}
         </div>

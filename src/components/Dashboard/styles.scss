@@ -9,6 +9,7 @@
     }
     .card-row {
       display: flex;
+      flex: 1 1;
       flex-wrap: wrap;
       .money-cards {
         min-width: 212px;

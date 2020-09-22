@@ -1,0 +1,33 @@
+.dashboard-container {
+  background: red;
+  display: flex;
+  .section-left {
+    width: 70%;
+    .dashboard-header {
+      font-size: 26px;
+      padding: 4px 10px;
+    }
+    .card-row {
+      display: flex;
+      flex-wrap: wrap;
+      .money-cards {
+        min-width: 212px;
+        text-align: center;
+        .card-header {
+          padding: 6px;
+          text-align: center;
+        }
+        .card-body {
+          font-size: 30px;
+          padding: 2px 0 8px;
+        }
+      }
+      .card-container.chart-cards {
+        min-width: 464px;
+      }
+    }
+  }
+  .section-right {
+    width: 30%;
+  }
+}

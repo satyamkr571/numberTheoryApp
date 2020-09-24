@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import Checkbox from "../Controls/checkBox";
 import DropDown from "../Controls/dropDown";
 import Label from "../Controls/label";
 import Radio from "../Controls/radio";
 import TextBox from "../Controls/textBox";
-import { formFields } from "./FormData";
+//import { formFields } from "./formData";
 
 export default function Index() {
-  const [textvalue, settextvalue] = useState("satyam");
+  const formFields = useSelector((state) => state.formFields);
+  console.log(formFields);
   const getFormInitialState = () => {
     let formFieldInitialState = {};
     formFields.forEach((field) => {
@@ -15,9 +18,10 @@ export default function Index() {
     return formFieldInitialState;
   };
   const initialState = getFormInitialState();
-  console.log("initialState : ", initialState);
   const [formState, setFormState] = useState(initialState);
+  console.log("initialState : ", initialState);
 
+  const [textvalue, settextvalue] = useState("satyam");
   const handleChange = (inputValue, _event) => {
     console.log(inputValue, _event);
     settextvalue(inputValue);
@@ -25,7 +29,6 @@ export default function Index() {
     formData[_event.target.id] = inputValue;
     setFormState(formData);
   };
-
   const renderField = (fieldData) => {
     switch (fieldData.fieldType) {
       case "text":
@@ -56,7 +59,7 @@ export default function Index() {
         );
       case "checkbox":
         return (
-          <Radio
+          <Checkbox
             id="rd1"
             name="radio"
             radioData={[{ value: 12 }, { value: 13 }, { value: 14 }]}

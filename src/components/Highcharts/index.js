@@ -4,7 +4,7 @@ import { set, isEqual } from "lodash";
 import Highcharts from "highcharts/highstock";
 import { getChartConfigs } from "./config";
 
-const Charts = props => {
+const Charts = (props) => {
   //Ref...
   const chartContainer = useRef(null);
   const { chartsData, height, yAxisData, xAxisData, chartType } = props;
@@ -31,7 +31,7 @@ const Charts = props => {
       xAxisData.title || "Dummy XAxis Title"
     );
     chartConfigs.series = [];
-    console.log("chartConfigs: ", chartConfigs);
+    //console.log("chartConfigs: ", chartConfigs);
     //creating chart...
     if (isEqual(chartType, "bar")) {
       chart = Highcharts.chart(chartContainer.current, chartConfigs);
@@ -40,8 +40,8 @@ const Charts = props => {
     }
   };
   // Method to update the chart with data...
-  const updateChart = series => {
-    console.log(series);
+  const updateChart = (series) => {
+    //console.log(series);
     clearChart();
     if (series && series.length > 0 && Array.isArray(series)) {
       series.forEach((seriesItem, index) =>

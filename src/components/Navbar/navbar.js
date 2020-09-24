@@ -22,6 +22,7 @@ function NavBar(props) {
                 activeMenu === navMenu.navMenuId ? " active-menu" : ""
               }${navMenu.disabled ? " menu-disabled" : ""}`}
               id={navMenu.navMenuId}
+              key={navMenu.navMenuId}
             >
               <a
                 href={navMenu.navMenuRoute}

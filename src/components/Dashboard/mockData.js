@@ -3007,7 +3007,7 @@ export const usersChartData = {
   success: true,
 };
 
-export const LeadsChartData = {
+export const leadsChartData = {
   data: {
     xAxis: {
       categories: [

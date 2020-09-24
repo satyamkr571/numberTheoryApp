@@ -10,8 +10,13 @@ import {
   costPerMQLChartData,
   costPerSQLChartData,
   mockData,
+  usersChartData,
+  leadsChartData,
+  SQLChartsData,
+  MQLChartsData,
+  CustomerChartData,
 } from "./mockData";
-const Dashboard = (props) => {
+const Dashboard = props => {
   const moneyDetails = [
     { title: "Revenue", value: "590333" },
     { title: "Costs", value: "393194" },
@@ -65,19 +70,69 @@ const Dashboard = (props) => {
     },
   ];
   const periodData = [
-    { title: "Users" },
-    { title: "Leads" },
-    { title: "MQL" },
-    { title: "SQL" },
-    { title: "Customer" },
+    {
+      title: "Users",
+      chart: usersChartData,
+      chartDetails: [
+        {
+          id: 1,
+          type: "column",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "Leads",
+      chart: leadsChartData,
+      chartDetails: [
+        {
+          id: 1,
+          type: "column",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "MQL",
+      chart: MQLChartsData,
+      chartDetails: [
+        {
+          id: 1,
+          type: "column",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "SQL",
+      chart: SQLChartsData,
+      chartDetails: [
+        {
+          id: 1,
+          type: "column",
+          seriesData: mockData,
+        },
+      ],
+    },
+    {
+      title: "Customer",
+      chart: CustomerChartData,
+      chartDetails: [
+        {
+          id: 1,
+          type: "column",
+          seriesData: mockData,
+        },
+      ],
+    },
   ];
 
   // const dispatch = useDispatch();
 
-  const getxAxisData = (chartData) => {
+  const getxAxisData = chartData => {
     return (chartData && chartData.xAxis) || {};
   };
-  const renderChart = (data, chartHeight = "300px") => {
+  const renderChart = (data, chartHeight = "300px", chartType) => {
     const { chartDetails, chart } = data;
     const xAxisData = getxAxisData(chart);
     return (
@@ -86,6 +141,7 @@ const Dashboard = (props) => {
           height={chartHeight}
           chartsData={chartDetails}
           xAxisData={xAxisData}
+          chartType={chartType}
         />
       </div>
     );
@@ -106,7 +162,7 @@ const Dashboard = (props) => {
             ))}
           </div>
           <div className="card-row">
-            {chartData.map((data) => (
+            {chartData.map(data => (
               <Card
                 classNames=" chart-cards"
                 body={renderChart(data, "200px")}
@@ -118,11 +174,11 @@ const Dashboard = (props) => {
       <div className="section-right">
         <div className="header">Selected Period:</div>
         <div className="body">
-          {periodData.map((period) => (
+          {periodData.map(period => (
             <Card
               classNames=" chart-cards"
               header={period.title}
-              body={renderChart(period, "100px")}
+              body={renderChart(period, "100px", "bar")}
             />
           ))}
         </div>

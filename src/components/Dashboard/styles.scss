@@ -1,5 +1,6 @@
 .dashboard-container {
-  background: red;
+  background-color: rgba(3, 90, 90, 0.849);
+  padding-top: 30px;
   display: flex;
   .section-left {
     width: 70%;
@@ -21,6 +22,7 @@
         .card-body {
           font-size: 30px;
           padding: 2px 0 8px;
+
         }
       }
       .card-container.chart-cards {
@@ -30,5 +32,6 @@
   }
   .section-right {
     width: 30%;
+    padding-top: 10px;
   }
 }

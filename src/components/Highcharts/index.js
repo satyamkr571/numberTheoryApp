@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { set } from "lodash";
+import { set, isEqual } from "lodash";
 import Highcharts from "highcharts/highstock";
 import { getChartConfigs } from "./config";
 
-const Charts = (props) => {
+const Charts = props => {
   //Ref...
   const chartContainer = useRef(null);
-  const { chartsData, height, yAxisData, xAxisData } = props;
+  const { chartsData, height, yAxisData, xAxisData, chartType } = props;
   let chart = null;
   useEffect(() => {
     updateChart(chartsData);
@@ -33,10 +33,14 @@ const Charts = (props) => {
     chartConfigs.series = [];
     console.log("chartConfigs: ", chartConfigs);
     //creating chart...
-    chart = Highcharts.stockChart(chartContainer.current, chartConfigs);
+    if (isEqual(chartType, "bar")) {
+      chart = Highcharts.chart(chartContainer.current, chartConfigs);
+    } else {
+      chart = Highcharts.stockChart(chartContainer.current, chartConfigs);
+    }
   };
   // Method to update the chart with data...
-  const updateChart = (series) => {
+  const updateChart = series => {
     console.log(series);
     clearChart();
     if (series && series.length > 0 && Array.isArray(series)) {

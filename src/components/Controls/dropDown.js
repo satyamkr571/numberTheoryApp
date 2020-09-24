@@ -1,7 +1,14 @@
 import React from "react";
 
 export default function DropDown(props) {
-  const { value, id, name, dropdownvalue, handleChange } = props;
+  const {
+    value,
+    fieldId: id,
+    name,
+    dropdownvalue,
+    handleChange,
+    className,
+  } = props;
   const onInputChange = (_event) => {
     const inputValue = _event.target.value;
     if (handleChange) {
@@ -10,9 +17,17 @@ export default function DropDown(props) {
   };
   return (
     <div className="dropdown-container">
-      <select name={name} value={value} id={id} onInputChange={onInputChange}>
+      <select
+        className={`input-field${className}`}
+        name={name}
+        value={value}
+        id={id}
+        onChange={onInputChange}
+      >
         {dropdownvalue &&
-          dropdownvalue.map((value) => <option value={value}>{value}</option>)}
+          dropdownvalue.map((item) => (
+            <option value={item.value}>{item.name}</option>
+          ))}
       </select>
     </div>
   );

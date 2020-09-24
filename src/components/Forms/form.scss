@@ -1,0 +1,79 @@
+.form-container {
+  background-image: url("../../assets/image1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  // background-position: bottom center;
+  min-height: 730px;
+  display: flex;
+  justify-content: center;
+  .card-container {
+    background: transparent;
+    padding-top: 30px;
+    width: 500px;
+    margin: 50px;
+    height: 450px;
+    .card-header {
+      display: flex;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 28px;
+    }
+    .card-body {
+      position: relative;
+    }
+  }
+}
+.dynamic-form {
+  //  display: flex;
+  padding-top: 10px;
+  justify-content: center;
+  margin: 50px;
+
+  padding: 0 20px;
+  .form-field {
+    padding: 10px;
+    position: relative;
+    height: 50px;
+    font-weight: 700;
+    font-size: 16px;
+    .label-container {
+      padding: 10px 0;
+    }
+    .form-button {
+      display: flex;
+      float: right;
+    }
+  }
+  .input-field {
+    justify-content: center;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 6px;
+    border: transparent;
+    width: 300px;
+  }
+  .dropdown-container {
+    .input-field {
+      width: 320px;
+    }
+  }
+  .label-conatiner {
+    margin-bottom: 4px;
+  }
+}
+
+.form-button {
+  position: absolute;
+  right: 30px;
+  top: 250px;
+  padding: 10px 50px;
+  border-radius: 7px;
+  font-weight: 700;
+  background: transparent;
+  box-shadow: 0 0 10px #000000;
+  &:hover {
+    border: 1px solid teal;
+    box-shadow: 0 0 10px teal;
+  }
+}

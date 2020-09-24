@@ -2,6 +2,11 @@ import Highcharts from "highcharts";
 import { mockData } from "../Dashboard/mockData";
 export const getChartConfigs = () => {
   const chartConfigs = {
+    chart: {
+      zoomType: "x",
+      panning: true,
+      panKey: "shift",
+    },
     rangeSelector: {
       enabled: false,
     },
@@ -61,7 +66,7 @@ export const getChartConfigs = () => {
       enabled: true,
       layout: "horizontal",
       align: "center",
-      floating: false,
+      floating: true,
       verticalAlign: "bottom",
       backgroundColor:
         (Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||

@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Radio(props) {
-  const { id, name, radioData, handleChange } = props;
+  const { id, name, radioData, handleChange, className } = props;
   const onInputChange = (_event) => {
     const inputValue = _event.target.value;
     if (handleChange) {
@@ -14,14 +14,15 @@ export default function Radio(props) {
         {radioData.map((data) => (
           <>
             <input
+              className={`${className}`}
               type="radio"
               id={id}
-              name={name}
+              name={id}
               value={data.value}
               checked={data.selected}
               onChange={onInputChange}
             />
-            <label for={id}>{data.value}</label>
+            <label for={id}>{data.name}</label>
           </>
         ))}
       </div>

@@ -9,7 +9,7 @@ export function formReducer(state = initialState, action) {
       return currState;
     }
     case "GET_FORM_CONTROLS":
-      return state.formFields;
+      return state;
 
     default:
       return state;

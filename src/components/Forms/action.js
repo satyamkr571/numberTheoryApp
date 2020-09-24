@@ -4,6 +4,6 @@ export const setFormData = (data) => ({
 });
 
 export const getFormData = (data) => ({
-  type: "GET_FORM_DATA",
+  type: "GET_FORM_CONTROLS",
   payload: data,
 });

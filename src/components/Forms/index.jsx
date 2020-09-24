@@ -1,40 +1,65 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Checkbox from "../Controls/checkBox";
 import DropDown from "../Controls/dropDown";
 import Label from "../Controls/label";
 import Radio from "../Controls/radio";
 import TextBox from "../Controls/textBox";
-//import { formFields } from "./formData";
+import { getFormData } from "./action";
+// import { formFields } from "./formData";
+import "./form.scss";
+import Card from "../Cards";
+import { isEmpty, isEqual, isNull } from "lodash";
 
 export default function Index() {
-  const formFields = useSelector((state) => state.formFields);
-  console.log(formFields);
+  const selectFormData = useSelector((state) => state.formData);
+  const { formFields } = selectFormData;
+  const dispatch = useDispatch();
+  const [formState, setFormState] = useState({});
+
+  useEffect(() => {
+    dispatch(getFormData());
+  }, []);
+
+  useEffect(() => {
+    getFormInitialState();
+  }, [formFields]);
   const getFormInitialState = () => {
     let formFieldInitialState = {};
-    formFields.forEach((field) => {
-      formFieldInitialState[field.fieldId] = field.defaultValue || null;
-    });
+    formFields &&
+      formFields.forEach((field) => {
+        formFieldInitialState[field.fieldId] = field.defaultValue || "";
+      });
+    setFormState(formFieldInitialState);
     return formFieldInitialState;
   };
-  const initialState = getFormInitialState();
-  const [formState, setFormState] = useState(initialState);
-  console.log("initialState : ", initialState);
-
+  console.log("formState : ", formState);
   const [textvalue, settextvalue] = useState("satyam");
+  const [show, setshow] = useState(null);
   const handleChange = (inputValue, _event) => {
     console.log(inputValue, _event);
+    const id = _event.target.id;
+    if (isEqual(id, "dd")) {
+      //const currentFormControl= [...for]
+      //dispatch(upFormControlStatus(inputValue))
+
+      setshow(inputValue);
+    }
     settextvalue(inputValue);
     const formData = { ...formState };
     formData[_event.target.id] = inputValue;
     setFormState(formData);
+  };
+  const onSubmit = () => {
+    alert("Form Submited");
   };
   const renderField = (fieldData) => {
     switch (fieldData.fieldType) {
       case "text":
         return (
           <TextBox
-            value={textvalue}
+            className=" field"
+            value={formState[fieldData.fieldId]}
             handleChange={handleChange}
             {...fieldData}
           />
@@ -42,7 +67,8 @@ export default function Index() {
       case "dropdown":
         return (
           <DropDown
-            value={textvalue}
+            className=" field"
+            value={formState[fieldData.fieldId]}
             handleChange={handleChange}
             {...fieldData}
           />
@@ -50,9 +76,11 @@ export default function Index() {
       case "radio":
         return (
           <Radio
-            id="rd1"
+            className=" field"
+            id="radio"
             name="radio"
-            radioData={[{ value: 11 }, { value: 15 }, { value: 20 }]}
+            radioData={fieldData.fieldValue}
+            value={formState[fieldData.fieldId]}
             handleChange={handleChange}
             {...fieldData}
           />
@@ -60,29 +88,76 @@ export default function Index() {
       case "checkbox":
         return (
           <Checkbox
-            id="rd1"
+            className=" field"
+            id="checkbox"
             name="radio"
-            radioData={[{ value: 12 }, { value: 13 }, { value: 14 }]}
+            radioData={fieldData.fieldValue}
+            value={formState[fieldData.fieldId]}
             handleChange={handleChange}
             {...fieldData}
           />
         );
 
       default:
-        return <TextBox value={textvalue} handleChange={handleChange} />;
+        return (
+          <TextBox
+            className=" field"
+            value={textvalue}
+            handleChange={handleChange}
+          />
+        );
     }
   };
   return (
-    <form className="dynamic-form">
-      {formFields &&
-        formFields.map((formField) => {
-          return (
-            <>
-              <Label {...formField} />
-              {renderField(formField)}
-            </>
-          );
-        })}
-    </form>
+    <div className="form-container">
+      <Card header="Task 2 Form">
+        <form className="dynamic-form" autoComplete="off">
+          {formFields &&
+            formFields.map((formField) => {
+              return (
+                <div className="form-field">
+                  <Label {...formField} />
+                  {renderField(formField)}
+                </div>
+              );
+            })}
+
+          {isNull(show) || isEmpty(show) ? null : isEqual(show, "true") ? (
+            <div className="form-field">
+              <Label fieldLabel={"Check your answer"} />
+              <Checkbox
+                className=" field"
+                id="checkbox"
+                name="radio"
+                radioData={[
+                  { name: "True", value: true },
+                  { name: "False", value: false },
+                ]}
+                value={"checkbox"}
+                handleChange={handleChange}
+              />
+            </div>
+          ) : (
+            <div className="form-field">
+              <Label fieldLabel={"Check your answer"} />
+              <Radio
+                className=" field"
+                id="radio"
+                name="radio"
+                radioData={[
+                  { name: "True", value: true },
+                  { name: "False", value: false },
+                ]}
+                value={"radio"}
+                handleChange={handleChange}
+              />
+            </div>
+          )}
+        </form>
+        <button onClick={onSubmit} className="form-button">
+          Submit
+        </button>
+      </Card>
+    </div>
   );
 }

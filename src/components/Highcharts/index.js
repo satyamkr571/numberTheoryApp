@@ -20,16 +20,8 @@ const Charts = (props) => {
   // Method to clear the chart data...
   const clearChart = () => {
     const chartConfigs = getChartConfigs();
-    set(
-      chartConfigs.yAxis,
-      ["title", "text"],
-      yAxisData.title || "Dummy YAxis Title"
-    );
-    set(
-      chartConfigs.xAxis,
-      ["title", "text"],
-      xAxisData.title || "Dummy XAxis Title"
-    );
+    set(chartConfigs.yAxis, ["title", "text"], yAxisData.title || "YAxis ");
+    set(chartConfigs.xAxis, ["title", "text"], xAxisData.title || "XAxis ");
     chartConfigs.series = [];
     //console.log("chartConfigs: ", chartConfigs);
     //creating chart...

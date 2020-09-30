@@ -1,23 +1,27 @@
 import React, { useEffect } from "react";
 //import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import "./styles.scss";
 import Card from "../Cards";
 import Charts from "../Highcharts";
 
 import { getData } from "./action";
-const Dashboard = () => {
+const Dashboard = (props) => {
   const dispatch = useDispatch();
   const selectDashboardData = useSelector((state) => state.dashboardData);
   const { moneyDetails, chartData, periodData } = selectDashboardData;
 
   useEffect(() => {
     dispatch(getData());
+    // props.dispatch(getData());
   }, []);
 
+  // When Connect used 
+  // useEffect(() => { // Effect body whatever changes you want to do... }, [props.dashboardData]);
   const getxAxisData = (chartData) => {
     return (chartData && chartData.xAxis) || {};
   };
+
   const renderChart = (data, chartHeight = "300px", chartType) => {
     const { chartDetails, chart } = data;
     const xAxisData = getxAxisData(chart);
@@ -32,6 +36,7 @@ const Dashboard = () => {
       </div>
     );
   };
+
   return (
     <div className="dashboard-container">
       <div className="section-left">
@@ -79,5 +84,23 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  dashboardData: PropTypes.object,
+};
+
+// map state to props provides you store's state as props by the key you create here...
+/*
+const mapStateToProps = state => ({
+  dashboardData: state.dashboardData
+  // kuchv: state.reducerKeyCombineReducerWaala,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return dispatch;
+};
+
+export default connect(mapSateToProps, mapDispatchToProps)(Dashboard);
+
+*/
 export default Dashboard;
+
